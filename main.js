@@ -23,8 +23,12 @@ const server = net.createServer(function (connection) {
     });
 
     connection.on('data', function (data) {
-        console.log(data.toString());
-        connection.write('Response: ' + getTranslatedString(data.toString()));
+        var inputString = data.toString();
+        inputString = inputString.replaceAll(" ","ˉ");
+        inputString = inputString.replaceAll("·","˙");
+        console.log(inputString);
+
+        connection.write(getTranslatedString(inputString));
     });
 });
 
