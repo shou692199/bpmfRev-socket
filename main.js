@@ -32,12 +32,21 @@ const server = net.createServer(function (connection) {
     });
 });
 
-let port = require('minimist')(process.argv.slice(2)).p;
+const argv = require('minimist')(process.argv.slice(2));
+let port = argv.p;
+let host = "";
+const globalAccess = argv.g;
+
 if(typeof port !== 'number') {
     port = 3000;
-    console.warn("Port not specified or is invalid! Using default value: 3000.")
+    console.warn("Port not specified or is invalid! Using default value: 3000.");
+}
+if(globalAccess === true) {
+    host = "0.0.0.0";
+} else {
+    host = "localhost";
 }
 
-server.listen(port, function () {
+server.listen(port, host, function () {
     console.log('Server listener started.');
 });
